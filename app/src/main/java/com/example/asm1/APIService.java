@@ -20,7 +20,7 @@ public interface APIService {
     @POST("/api/add_xe")
     Call<List<CarModel>> addXe(@Body CarModel xe);
 
-    @DELETE("/xoa_xe/{id}")
+    @DELETE("/api/xoa_xe/{id}")
     Call<List<CarModel>> xoaXe(@Path("id") String id); //restful api
 
     @PUT("/api/update_xe")

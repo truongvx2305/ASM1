@@ -58,10 +58,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<CarModel>> call, Response<List<CarModel>> response) {
                 if(response.isSuccessful()){
-                    listCarModel= response.body();
-
-                    carAdapter= new CarAdapter(getApplicationContext(), listCarModel);
-
+                    listCarModel = response.body();
+                    if (listCarModel == null || listCarModel.isEmpty()) {
+                        Log.e("Error", "Danh sách xe null hoặc trống");
+                        return;
+                    }
+                    carAdapter = new CarAdapter(getApplicationContext(), listCarModel);
                     lvMain.setAdapter(carAdapter);
                 }
             }
@@ -72,15 +74,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (listCarModel == null) {
-            Log.e("Error", "Danh sách xe null hoặc trống");
-            return;
-        }
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CarModel xeMoi= new CarModel(null, "Xe moi", 2023, "Huyndai", 1000);
+                CarModel xeMoi= new CarModel(null, "Xe moi 1", 2021, "Huyndai", 10000);
 
                 Call<List<CarModel>> callAddXe= apiService.addXe(xeMoi);
 
