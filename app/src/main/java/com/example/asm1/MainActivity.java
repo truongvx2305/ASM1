@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         APIService apiService= retrofit.create(APIService.class);
         Call<List<CarModel>> call= apiService.getCars();
 
+
+
         call.enqueue(new Callback<List<CarModel>>() {
             @Override
             public void onResponse(Call<List<CarModel>> call, Response<List<CarModel>> response) {
@@ -69,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Main", t.getMessage());
             }
         });
+
+        if (listCarModel == null) {
+            Log.e("Error", "Danh sách xe null hoặc trống");
+            return;
+        }
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,12 +104,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
         lvMain.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CarModel xeCanXoa= listCarModel.get(i);
 
-                Call<List<CarModel>> callXoaXe= apiService.xoaXe(xeCanXoa.getId());
+                Call<List<CarModel>> callXoaXe= apiService.xoaXe(xeCanXoa.get_id());
+
+                Log.d("Debug", "ID cần xóa: " + xeCanXoa.get_id());
+
 
                 callXoaXe.enqueue(new Callback<List<CarModel>>() {
                     @Override
